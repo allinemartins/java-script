@@ -1,7 +1,7 @@
-<h1>Jogo do número secreto</h1>
+<h1>Repositório voltado para códigos Javascript</h1>
 
-<h2>🎮 Sobre</h2>
-<p>Projeto ALURA - Estudo sobre o Git e Github.</p>
+<h2>Sobre</h2>
+<p>Projetos pessoais ou da plataforma ALURA (Fonte de estudo).</p>
 
 <h2>🛠️ Tecnologias</h2>
 <div>
