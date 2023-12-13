@@ -21,7 +21,12 @@ let intervalID = null;
 
 const countDown = () => {
     if(elapsedTime <= 0){                
-        audioEnd.play();                
+        audioEnd.play();
+        const focoAtivo = html.getAttribute('data-contexto') == 'foco';
+        if (focoAtivo) {
+            const evento = new CustomEvent('FocoFinalizado');
+            document.dispatchEvent(evento);
+        }                
         setStarAgain(true);
         return;
     }
