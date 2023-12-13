@@ -21,9 +21,8 @@ let intervalID = null;
 
 const countDown = () => {
     if(elapsedTime <= 0){                
-        audioEnd.play();        
-        elapsedTime = timeDefault;
-        setStarAgain();
+        audioEnd.play();                
+        setStarAgain(true);
         return;
     }
     elapsedTime -= 1;
@@ -34,7 +33,7 @@ buttonStartPauseTemp.addEventListener('click', startTemp);
 
 function startTemp(){
     if(intervalID){
-        changeTitleButton('play_arrow', 'Continuar')
+        changeTitleButton('play_arrow', 'Continuar');
         audioPause.play();
         clearIntervalID();
         return;
@@ -134,16 +133,48 @@ function addEventsClicks(element, attribute){
         html.setAttribute('data-contexto', attribute);
         imageBanner.setAttribute('src', `./imagens/${attribute}.png`);
         titleBanner.innerHTML = getTitleContexto(attribute);
-        elapsedTime = getTimeContexto(attribute);
+        elapsedTime = getTimeContexto(attribute);        
         setStarAgain();
     });    
 }
 
-function setStarAgain(){
+async function setStarAgain(end = false){    
     changeTitleButton('play_arrow', 'Começar');
-    clearIntervalID();    
+    clearIntervalID();
+    if(end){
+        disabledBtts(true);
+        await esperarPorTempo(6000);
+        disabledBtts(false);
+        audioEnd.pause;
+        changeTitleButton('play_arrow', 'Começar');
+        elapsedTime = getTimeContexto(getDataContexto(document.querySelector('.app__card-button.active').getAttribute('data-contexto')));
+    }
     setElapsedTime();
 }
 
+function esperarPorTempo(tempo) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, tempo);
+    });
+}
+
+function disabledBtts(disabled){
+    if(disabled){
+        buttonCards.forEach(element => {
+            element.disabled = true;
+        });
+        buttonStartPauseTemp.disabled = true;
+        checkAudio.disabled = true;
+        return;
+    }
+    buttonCards.forEach(element => {
+        element.disabled = false;
+    });
+    buttonStartPauseTemp.disabled = false;
+    checkAudio.disabled = false;
+    return;
+}
 
 setStarAgain();
